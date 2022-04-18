@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, request, flash
 
 app = Flask(__name__)
-app.config ['SECRET_KEY'] = 'fffjjdhhndj33s8fc8d3d'
+app.config['SECRET_KEY'] = 'fffjjdhhndj33git gits8fc8d3d'
 products = {'7': 'iphone-7', '8': 'iphone-8',
             '10': 'iphone-10', '10+': 'iphone-10+',
             '11': 'iphone-11', '11 pro max': 'iphone-11-pro-max',
