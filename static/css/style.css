@@ -1,0 +1,43 @@
+body{
+    background-color:#224D6E;
+}
+html, li, a{
+    color: white;
+    font-family: sans-serif;
+}
+a{
+    text-decoration:none;
+}
+
+li:hover{
+    transform: translate(3px, -1px);
+    transition: 300ms ease-in-out;
+}
+a:hover{
+    color: #4CE2FF;
+}
+form{
+    padding:20px;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    width:220px;
+    background-color: #4362AF;
+    border-radius:8px;
+}
+.link_goto{
+    display:block;
+    margin-bottom:50px;
+}
+.flash{
+    color: black;
+    height: 20px;
+    padding:5px 0 0 10px;
+    margin-bottom:15px;
+}
+.flash.success{
+    background-color: #79C585;
+}
+.flash.error{
+    background-color: #C57979;
+}

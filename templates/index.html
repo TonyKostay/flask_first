@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Comp atible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+    <title>Document</title>
+</head>
+<body>
+    {% block products %}
+        <h1>{{title}}</h1>
+        <ul>
+            {% for product in products %}
+                <li><a href="{{products[product]}}">{{product}}</a></li>
+            {% endfor %}
+        </ul>
+        <a href="{{link}}" class="link_goto">{{text_link}}</a>
+        {% for cat, msg in get_flashed_messages(True) %}
+            <div class="flash {{cat}}">{{msg}}</div>
+        {% endfor %}
+        <form action="{{action}}" method="post" class="form-contact">
+            <label for="username">Имя</label> <input type="text" name="username" value="" id="username"required>
+            <label for="email" >Почта</label> <input type="email" name="email" value="" id="email"required>
+            <label>Сообщение</label>
+            <textarea name="message" rows=7 cols=40></textarea>
+            <input type="submit" value="Отправить">
+        </form>
+    {% endblock %}
+
+
+
+</body>
+</html>
