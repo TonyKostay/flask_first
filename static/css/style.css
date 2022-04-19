@@ -21,7 +21,7 @@ form{
     display:flex;
     justify-content:space-between;
     flex-wrap:wrap;
-    width:220px;
+    width:240px;
     background-color: #4362AF;
     border-radius:8px;
 }
