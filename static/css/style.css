@@ -25,6 +25,10 @@ form{
     background-color: #4362AF;
     border-radius:8px;
 }
+nav ul li{
+    margin:0;
+    display:inline;
+}
 .link_goto{
     display:block;
     margin-bottom:50px;
