@@ -1,5 +1,11 @@
 body{
     background-color:#224D6E;
+    width:100vw;
+    padding:0 15px 0 15px;
+    margin:0;
+}
+main{
+    margin-top:70px;
 }
 html, li, a{
     color: white;
@@ -17,6 +23,7 @@ a:hover{
     color: #4CE2FF;
 }
 form{
+    margin-top:50px;
     padding:20px;
     display:flex;
     justify-content:space-between;
@@ -27,11 +34,53 @@ form{
 }
 nav ul li{
     margin:0;
+    margin-left:10px;
     display:inline;
 }
 .link_goto{
     display:block;
-    margin-bottom:50px;
+}
+
+.entering{
+    color:#224D6E;
+    width: 80px;
+    height: 30px;
+    background-color: lightblue;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:20px;
+}
+.entering_a{
+    display: block;
+    position: fixed;
+    top: 4px;
+    left: 85vw;
+    border-radius:20px;
+}
+.entering:hover{
+    background-color: white;
+}
+header{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100vw;
+    background-color: #4362AF;
+    height:38px;
+}
+header nav ul li{
+    font-size:12px;
+}
+
+header nav ul{
+    padding: 0;
+    margin:0;
+    margin-top: 7px;
+
+}
+.wrap{
+    margin-top:70px;
 }
 .flash{
     color: black;

@@ -1,6 +1,7 @@
 from flask import Flask, render_template, url_for, request, flash, session, redirect, abort, g
 import sqlite3
 import os
+from fdatabase import FDataBase
 
 DATABASE = '/tmp/flsite.db'
 DEBUG = True
@@ -10,6 +11,7 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'flsite.db')))
 
+#--------------------------------------------------------------------------------------DataBase
 def connect_db():
     conn = sqlite3.connect(app.config['DATABASE'])
     conn.row_factory = sqlite3.Row
@@ -22,12 +24,18 @@ def create_db():
     db.commit()
     db.close()
 
+def get_db():
+    if not hasattr(g, 'link_db'):
+        g.link_db = connect_db()
+    return g.link_db
+
 products = {'7': 'iphone-7', '8': 'iphone-8',
             '10': 'iphone-10', '10+': 'iphone-10+',
             '11': 'iphone-11', '11 pro max': 'iphone-11-pro-max',
             '12': 'iphone-12', '12 mini': 'iphone-12-mini'}
 products2 = {'MacBook PRO': 'MacBook-PRO', 'MacBook Air': 'MacBook-Air',
              'iMac': 'iMac'}
+#--------------------------------------------------------------------------------------
 
 def processing(method,form):
     if method == 'POST':
@@ -37,11 +45,6 @@ def processing(method,form):
         else:
             flash('Ошибка отправки', category='error')
 
-def get_db():
-    if not hasattr(g, 'link_db'):
-        g.link_db = connect_db()
-    return g.link_db
-
 @app.teardown_appcontext
 def close_db(error):
     if hasattr(g, 'link_db'):
@@ -50,14 +53,16 @@ def close_db(error):
 @app.route('/', methods=['POST','GET'])
 def index():
     db = get_db()
-    'dbase = FDataBase(db)'
+    dbase = FDataBase(db)
     processing(request.method, request.form)
-    return render_template('index.html', title="Смартфоны Apple Iphone", products=products, link='/page2', text_link='Перейти к компьютерам', action='/', menu='dbase.getMenu()')
+    return render_template('index.html', title="Смартфоны Apple Iphone", products=products, link='/page2', text_link='Перейти к компьютерам', action='/', menu=dbase.getMenu())
 
 @app.route('/page2', methods=['POST','GET'])
 def page2():
+    db = get_db()
+    dbase = FDataBase(db)
     processing(request.method, request.form)
-    return render_template('page2.html', title="Ноутбуки и компьютеры Apple", products=products2, link='/', text_link='Перейти к смартфонам',action='/page2')
+    return render_template('page2.html', title="Ноутбуки и компьютеры Apple", products=products2, link='/', text_link='Перейти к смартфонам',action='/page2', menu=dbase.getMenu())
 
 @app.route('/profile/<username>')
 def profile(username):
@@ -75,6 +80,20 @@ def login():
 
     return render_template('login.html', title='Авторизация')
 
+@app.route('/addpost', methods= ['POST', 'GET'])
+def addpost():
+    db = get_db()
+    dbase = FDataBase(db)
+    if request.method == "POST":
+        if len(request.form['titlePost']) > 4 and len(request.form['post']) > 10:
+            res = dbase.addPost(request.form['titlePost'], request.form['post'])
+            if not res:
+                flash('Ошибка добавления статьи', category='error')
+            else:
+                flash('Статья успешно добавлена', category='success')
+        else:
+            flash('Ошибка добавления статьи', category='error')
+    return render_template('addpost.html', menu=dbase.getMenu(), title="Добавление статьи")
 
 @app.errorhandler(404)
 def pageNotFound(error):
